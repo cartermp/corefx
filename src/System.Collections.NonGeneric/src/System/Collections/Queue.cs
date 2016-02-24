@@ -18,6 +18,8 @@ namespace System.Collections
 {
     // A simple Queue of objects.  Internally it is implemented as a circular
     // buffer, so Enqueue can be O(n).  Dequeue is O(1).
+    /// <summary>Represents a first-in, first-out collection of objects.</summary>
+    /// <filterpriority>1</filterpriority>
     [DebuggerTypeProxy(typeof(System.Collections.Queue.QueueDebugView))]
     [DebuggerDisplay("Count = {Count}")]
     public class Queue : ICollection
@@ -35,6 +37,7 @@ namespace System.Collections
 
         // Creates a queue with room for capacity objects. The default initial
         // capacity and grow factor are used.
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Queue" /> class that is empty, has the default initial capacity, and uses the default growth factor.</summary>
         public Queue()
             : this(32, (float)2.0)
         {
@@ -43,6 +46,9 @@ namespace System.Collections
         // Creates a queue with room for capacity objects. The default grow factor
         // is used.
         //
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Queue" /> class that is empty, has the specified initial capacity, and uses the default growth factor.</summary>
+        /// <param name="capacity">The initial number of elements that the <see cref="T:System.Collections.Queue" /> can contain. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero. </exception>
         public Queue(int capacity)
             : this(capacity, (float)2.0)
         {
@@ -51,6 +57,10 @@ namespace System.Collections
         // Creates a queue with room for capacity objects. When full, the new
         // capacity is set to the old capacity * growFactor.
         //
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Queue" /> class that is empty, has the specified initial capacity, and uses the specified growth factor.</summary>
+        /// <param name="capacity">The initial number of elements that the <see cref="T:System.Collections.Queue" /> can contain. </param>
+        /// <param name="growFactor">The factor by which the capacity of the <see cref="T:System.Collections.Queue" /> is expanded. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero.-or- <paramref name="growFactor" /> is less than 1.0 or greater than 10.0. </exception>
         public Queue(int capacity, float growFactor)
         {
             if (capacity < 0)
@@ -69,6 +79,9 @@ namespace System.Collections
         // Fills a Queue with the elements of an ICollection.  Uses the enumerator
         // to get each of the elements.
         //
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Queue" /> class that contains elements copied from the specified collection, has the same initial capacity as the number of elements copied, and uses the default growth factor.</summary>
+        /// <param name="col">The <see cref="T:System.Collections.ICollection" /> to copy elements from. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="col" /> is null. </exception>
         public Queue(ICollection col) : this((col == null ? 32 : col.Count))
         {
             if (col == null)
@@ -80,11 +93,17 @@ namespace System.Collections
         }
 
 
+        /// <summary>Gets the number of elements contained in the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>The number of elements contained in the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual int Count
         {
             get { return _size; }
         }
 
+        /// <summary>Creates a shallow copy of the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>A shallow copy of the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object Clone()
         {
             Queue q = new Queue(_size);
@@ -101,11 +120,17 @@ namespace System.Collections
             return q;
         }
 
+        /// <summary>Gets a value indicating whether access to the <see cref="T:System.Collections.Queue" /> is synchronized (thread safe).</summary>
+        /// <returns>true if access to the <see cref="T:System.Collections.Queue" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsSynchronized
         {
             get { return false; }
         }
 
+        /// <summary>Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>An object that can be used to synchronize access to the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object SyncRoot
         {
             get
@@ -119,6 +144,8 @@ namespace System.Collections
         }
 
         // Removes all Objects from the queue.
+        /// <summary>Removes all objects from the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <filterpriority>2</filterpriority>
         public virtual void Clear()
         {
             if (_size != 0)
@@ -142,6 +169,14 @@ namespace System.Collections
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
+        /// <summary>Copies the <see cref="T:System.Collections.Queue" /> elements to an existing one-dimensional <see cref="T:System.Array" />, starting at the specified array index.</summary>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Queue" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <param name="index">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.Queue" /> is greater than the available space from <paramref name="index" /> to the end of the destination <paramref name="array" />. </exception>
+        /// <exception cref="T:System.ArrayTypeMismatchException">The type of the source <see cref="T:System.Collections.Queue" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(Array array, int index)
         {
             if (array == null)
@@ -167,6 +202,9 @@ namespace System.Collections
 
         // Adds obj to the tail of the queue.
         //
+        /// <summary>Adds an object to the end of the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <param name="obj">The object to add to the <see cref="T:System.Collections.Queue" />. The value can be null. </param>
+        /// <filterpriority>2</filterpriority>
         public virtual void Enqueue(Object obj)
         {
             if (_size == _array.Length)
@@ -188,6 +226,9 @@ namespace System.Collections
         // GetEnumerator returns an IEnumerator over this Queue.  This
         // Enumerator will support removing.
         // 
+        /// <summary>Returns an enumerator that iterates through the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> for the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IEnumerator GetEnumerator()
         {
             return new QueueEnumerator(this);
@@ -195,6 +236,10 @@ namespace System.Collections
 
         // Removes the object at the head of the queue and returns it. If the queue
         // is empty, this method simply returns null.
+        /// <summary>Removes and returns the object at the beginning of the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>The object that is removed from the beginning of the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Collections.Queue" /> is empty. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual Object Dequeue()
         {
             if (Count == 0)
@@ -212,6 +257,10 @@ namespace System.Collections
         // Returns the object at the head of the queue. The object remains in the
         // queue. If the queue is empty, this method throws an 
         // InvalidOperationException.
+        /// <summary>Returns the object at the beginning of the <see cref="T:System.Collections.Queue" /> without removing it.</summary>
+        /// <returns>The object at the beginning of the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Collections.Queue" /> is empty. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual Object Peek()
         {
             if (Count == 0)
@@ -225,6 +274,11 @@ namespace System.Collections
         // class around the queue - the caller must not use references to the
         // original queue.
         // 
+        /// <summary>Returns a new <see cref="T:System.Collections.Queue" /> that wraps the original queue, and is thread safe.</summary>
+        /// <returns>A <see cref="T:System.Collections.Queue" /> wrapper that is synchronized (thread safe).</returns>
+        /// <param name="queue">The <see cref="T:System.Collections.Queue" /> to synchronize. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="queue" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static Queue Synchronized(Queue queue)
         {
             if (queue == null)
@@ -237,6 +291,10 @@ namespace System.Collections
         // Equality is determined using obj.Equals().
         //
         // Exceptions: ArgumentNullException if obj == null.
+        /// <summary>Determines whether an element is in the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <returns>true if <paramref name="obj" /> is found in the <see cref="T:System.Collections.Queue" />; otherwise, false.</returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.Queue" />. The value can be null. </param>
+        /// <filterpriority>2</filterpriority>
         public virtual bool Contains(Object obj)
         {
             int index = _head;
@@ -268,6 +326,9 @@ namespace System.Collections
         // objects in the Queue, or an empty array if the queue is empty.
         // The order of elements in the array is first in to last in, the same
         // order produced by successive calls to Dequeue.
+        /// <summary>Copies the <see cref="T:System.Collections.Queue" /> elements to a new array.</summary>
+        /// <returns>A new array containing elements copied from the <see cref="T:System.Collections.Queue" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object[] ToArray()
         {
             if (_size == 0)
@@ -312,6 +373,9 @@ namespace System.Collections
             _version++;
         }
 
+        /// <summary>Sets the capacity to the actual number of elements in the <see cref="T:System.Collections.Queue" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Queue" /> is read-only.</exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void TrimToSize()
         {
             SetCapacity(_size);
