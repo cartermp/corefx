@@ -10,6 +10,7 @@ using Microsoft.Win32;
 
 namespace Microsoft.Win32.SafeHandles
 {
+    /// <summary>Represents a wrapper class for a file handle. </summary>
     public sealed partial class SafeFileHandle : SafeHandle
     {
         internal bool? IsAsync { get; set; }
