@@ -16,6 +16,7 @@ namespace System.Security.Cryptography
     internal static partial class RSAImplementation
     {
 #endif
+    /// <summary>Provides a Cryptography Next Generation (CNG) implementation of the RSA algorithm. </summary>
     public sealed partial class RSACng : RSA
     {
         /// <summary>
@@ -64,8 +65,7 @@ namespace System.Security.Cryptography
                         {
                             using (SafeUnicodeStringHandle safeHashAlgorithmName = new SafeUnicodeStringHandle(padding.OaepHashAlgorithm.Name))
                             {
-                                BCRYPT_OAEP_PADDING_INFO paddingInfo = new BCRYPT_OAEP_PADDING_INFO()
-                                {
+                                BCRYPT_OAEP_PADDING_INFO paddingInfo = new BCRYPT_OAEP_PADDING_INFO() {
                                     pszAlgId = safeHashAlgorithmName.DangerousGetHandle(),
 
                                     // It would nice to put randomized data here but RSAEncryptionPadding does not at this point provide support for this.

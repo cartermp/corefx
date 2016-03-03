@@ -8,6 +8,8 @@ namespace System
 {
     internal class DBNull
     {
+        /// <summary>Represents the sole instance of the <see cref="T:System.DBNull" /> class.</summary>
+        /// <filterpriority>1</filterpriority>
         public static readonly DBNull Value = new DBNull();
     }
 }

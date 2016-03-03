@@ -20,6 +20,7 @@ namespace System.Security.Cryptography
     internal static partial class RSAImplementation
     {
 #endif
+    /// <summary>Provides a Cryptography Next Generation (CNG) implementation of the RSA algorithm. </summary>
     public sealed partial class RSACng : RSA
     {
         /// <summary>
@@ -86,8 +87,7 @@ namespace System.Security.Cryptography
                     {
                         using (SafeUnicodeStringHandle safeHashAlgorithmName = new SafeUnicodeStringHandle(hashAlgorithmName))
                         {
-                            BCRYPT_PKCS1_PADDING_INFO paddingInfo = new BCRYPT_PKCS1_PADDING_INFO()
-                            {
+                            BCRYPT_PKCS1_PADDING_INFO paddingInfo = new BCRYPT_PKCS1_PADDING_INFO() {
                                 pszAlgId = safeHashAlgorithmName.DangerousGetHandle(),
                             };
                             signOrVerify(AsymmetricPaddingMode.NCRYPT_PAD_PKCS1_FLAG, &paddingInfo);
@@ -99,8 +99,7 @@ namespace System.Security.Cryptography
                     {
                         using (SafeUnicodeStringHandle safeHashAlgorithmName = new SafeUnicodeStringHandle(hashAlgorithmName))
                         {
-                            BCRYPT_PSS_PADDING_INFO paddingInfo = new BCRYPT_PSS_PADDING_INFO()
-                            {
+                            BCRYPT_PSS_PADDING_INFO paddingInfo = new BCRYPT_PSS_PADDING_INFO() {
                                 pszAlgId = safeHashAlgorithmName.DangerousGetHandle(),
                                 cbSalt = hash.Length,
                             };

@@ -12,6 +12,9 @@ namespace System.Resources
     {
         private readonly string _culture;
 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Resources.NeutralResourcesLanguageAttribute" /> class.</summary>
+        /// <param name="cultureName">The name of the culture that the current assembly's neutral resources were written in. </param>
+        /// <exception cref="T:System.ArgumentNullException">The <paramref name="cultureName" /> parameter is null. </exception>
         public NeutralResourcesLanguageAttribute(string cultureName)
         {
             if (cultureName == null)
@@ -20,6 +23,8 @@ namespace System.Resources
             _culture = cultureName;
         }
 
+        /// <summary>Gets the culture name.</summary>
+        /// <returns>The name of the default culture for the main assembly.</returns>
         public string CultureName
         {
             get { return _culture; }

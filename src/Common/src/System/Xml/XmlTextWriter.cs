@@ -14,12 +14,14 @@ namespace System.Xml
     internal enum Formatting
     {
         // No special formatting is done (this is the default).
+        /// <summary>No special formatting is applied. This is the default.</summary>
         None,
 
         //This option causes child elements to be indented using the Indentation and IndentChar properties.  
         // It only indents Element Content (http://www.w3.org/TR/1998/REC-xml-19980210#sec-element-content)
         // and not Mixed Content (http://www.w3.org/TR/1998/REC-xml-19980210#sec-mixed-content)
         // according to the XML 1.0 definitions of these terms.
+        /// <summary>Causes child elements to be indented according to the <see cref="P:System.Xml.XmlTextWriter.Indentation" /> and <see cref="P:System.Xml.XmlTextWriter.IndentChar" /> settings. </summary>
         Indented,
     };
 
@@ -266,6 +268,11 @@ namespace System.Xml
         }
 
         // Creates an instance of the XmlTextWriter class using the specified stream.
+        /// <summary>Creates an instance of the XmlTextWriter class using the specified stream and encoding.</summary>
+        /// <param name="w">The stream to which you want to write. </param>
+        /// <param name="encoding">The encoding to generate. If encoding is null it writes out the stream as UTF-8 and omits the encoding attribute from the ProcessingInstruction. </param>
+        /// <exception cref="T:System.ArgumentException">The encoding is not supported or the stream cannot be written to. </exception>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="w" /> is null. </exception>
         public XmlTextWriter(Stream w, Encoding encoding) : this()
         {
             this.encoding = encoding;
@@ -278,6 +285,8 @@ namespace System.Xml
         }
 
         // Creates an instance of the XmlTextWriter class using the specified TextWriter.
+        /// <summary>Creates an instance of the XmlTextWriter class using the specified <see cref="T:System.IO.TextWriter" />.</summary>
+        /// <param name="w">The TextWriter to write to. It is assumed that the TextWriter is already set to the correct encoding. </param>
         public XmlTextWriter(TextWriter w) : this()
         {
             textWriter = w;
@@ -291,6 +300,8 @@ namespace System.Xml
         // XmlTextWriter properties
         //
         // Gets the XmlTextWriter base stream.
+        /// <summary>Gets the underlying stream object.</summary>
+        /// <returns>The stream to which the XmlTextWriter is writing or null if the XmlTextWriter was constructed using a <see cref="T:System.IO.TextWriter" /> that does not inherit from the <see cref="T:System.IO.StreamWriter" /> class.</returns>
         public Stream BaseStream
         {
             get
@@ -301,6 +312,9 @@ namespace System.Xml
         }
 
         // Gets or sets a value indicating whether to do namespace support.
+        /// <summary>Gets or sets a value indicating whether to do namespace support.</summary>
+        /// <returns>true to support namespaces; otherwise, false.The default is true.</returns>
+        /// <exception cref="T:System.InvalidOperationException">You can only change this property when in the WriteState.Start state. </exception>
         public bool Namespaces
         {
             get { return this.namespaces; }
@@ -314,6 +328,8 @@ namespace System.Xml
         }
 
         // Indicates how the output is formatted.
+        /// <summary>Indicates how the output is formatted.</summary>
+        /// <returns>One of the <see cref="T:System.Xml.Formatting" /> values. The default is Formatting.None (no special formatting).</returns>
         public Formatting Formatting
         {
             get { return this.formatting; }
@@ -321,6 +337,9 @@ namespace System.Xml
         }
 
         // Gets or sets how many IndentChars to write for each level in the hierarchy when Formatting is set to "Indented".
+        /// <summary>Gets or sets how many IndentChars to write for each level in the hierarchy when <see cref="P:System.Xml.XmlTextWriter.Formatting" /> is set to Formatting.Indented.</summary>
+        /// <returns>Number of IndentChars for each level. The default is 2.</returns>
+        /// <exception cref="T:System.ArgumentException">Setting this property to a negative value. </exception>
         public int Indentation
         {
             get { return this.indentation; }
@@ -333,6 +352,8 @@ namespace System.Xml
         }
 
         // Gets or sets which character to use for indenting when Formatting is set to "Indented".
+        /// <summary>Gets or sets which character to use for indenting when <see cref="P:System.Xml.XmlTextWriter.Formatting" /> is set to Formatting.Indented.</summary>
+        /// <returns>The character to use for indenting. The default is space.NoteThe XmlTextWriter allows you to set this property to any character. To ensure valid XML, you must specify a valid white space character, 0x9, 0x10, 0x13 or 0x20.</returns>
         public char IndentChar
         {
             get { return this.indentChar; }
@@ -340,6 +361,9 @@ namespace System.Xml
         }
 
         // Gets or sets which character to use to quote attribute values.
+        /// <summary>Gets or sets which character to use to quote attribute values.</summary>
+        /// <returns>The character to use to quote attribute values. This must be a single quote (&amp;#39;) or a double quote (&amp;#34;). The default is a double quote.</returns>
+        /// <exception cref="T:System.ArgumentException">Setting this property to something other than either a single or double quote. </exception>
         public char QuoteChar
         {
             get { return this.quoteChar; }
@@ -358,18 +382,25 @@ namespace System.Xml
         // XmlWriter implementation
         //
         // Writes out the XML declaration with the version "1.0".
+        /// <summary>Writes the XML declaration with the version "1.0".</summary>
+        /// <exception cref="T:System.InvalidOperationException">This is not the first write method called after the constructor. </exception>
         public override void WriteStartDocument()
         {
             StartDocument(-1);
         }
 
         // Writes out the XML declaration with the version "1.0" and the standalone attribute.
+        /// <summary>Writes the XML declaration with the version "1.0" and the standalone attribute.</summary>
+        /// <param name="standalone">If true, it writes "standalone=yes"; if false, it writes "standalone=no". </param>
+        /// <exception cref="T:System.InvalidOperationException">This is not the first write method called after the constructor. </exception>
         public override void WriteStartDocument(bool standalone)
         {
             StartDocument(standalone ? 1 : 0);
         }
 
         // Closes any open elements or attributes and puts the writer back in the Start state.
+        /// <summary>Closes any open elements or attributes and puts the writer back in the Start state.</summary>
+        /// <exception cref="T:System.ArgumentException">The XML document is invalid. </exception>
         public override void WriteEndDocument()
         {
             try
@@ -398,6 +429,13 @@ namespace System.Xml
         }
 
         // Writes out the DOCTYPE declaration with the specified name and optional attributes.
+        /// <summary>Writes the DOCTYPE declaration with the specified name and optional attributes.</summary>
+        /// <param name="name">The name of the DOCTYPE. This must be non-empty. </param>
+        /// <param name="pubid">If non-null it also writes PUBLIC "pubid" "sysid" where <paramref name="pubid" /> and <paramref name="sysid" /> are replaced with the value of the given arguments. </param>
+        /// <param name="sysid">If <paramref name="pubid" /> is null and <paramref name="sysid" /> is non-null it writes SYSTEM "sysid" where <paramref name="sysid" /> is replaced with the value of this argument. </param>
+        /// <param name="subset">If non-null it writes [subset] where subset is replaced with the value of this argument. </param>
+        /// <exception cref="T:System.InvalidOperationException">This method was called outside the prolog (after the root element). </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="name" /> is null or String.Empty-or- the value for <paramref name="name" /> would result in invalid XML. </exception>
         public override void WriteDocType(string name, string pubid, string sysid, string subset)
         {
             try
@@ -441,6 +479,11 @@ namespace System.Xml
         }
 
         // Writes out the specified start tag and associates it with the given namespace and prefix.
+        /// <summary>Writes the specified start tag and associates it with the given namespace and prefix.</summary>
+        /// <param name="prefix">The namespace prefix of the element. </param>
+        /// <param name="localName">The local name of the element. </param>
+        /// <param name="ns">The namespace URI to associate with the element. If this namespace is already in scope and has an associated prefix then the writer automatically writes that prefix also. </param>
+        /// <exception cref="T:System.InvalidOperationException">The writer is closed. </exception>
         public override void WriteStartElement(string prefix, string localName, string ns)
         {
             try
@@ -518,18 +561,25 @@ namespace System.Xml
         }
 
         // Closes one element and pops the corresponding namespace scope.
+        /// <summary>Closes one element and pops the corresponding namespace scope.</summary>
         public override void WriteEndElement()
         {
             InternalWriteEndElement(false);
         }
 
         // Closes one element and pops the corresponding namespace scope.
+        /// <summary>Closes one element and pops the corresponding namespace scope.</summary>
         public override void WriteFullEndElement()
         {
             InternalWriteEndElement(true);
         }
 
         // Writes the start of an attribute.
+        /// <summary>Writes the start of an attribute.</summary>
+        /// <param name="prefix">Namespace prefix of the attribute. </param>
+        /// <param name="localName">LocalName of the attribute. </param>
+        /// <param name="ns">NamespaceURI of the attribute </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="localName" /> is either null or String.Empty. </exception>
         public override void WriteStartAttribute(string prefix, string localName, string ns)
         {
             try
@@ -666,6 +716,7 @@ namespace System.Xml
         }
 
         // Closes the attribute opened by WriteStartAttribute.
+        /// <summary>Closes the previous <see cref="M:System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)" /> call.</summary>
         public override void WriteEndAttribute()
         {
             try
@@ -680,6 +731,10 @@ namespace System.Xml
         }
 
         // Writes out a &lt;![CDATA[...]]&gt; block containing the specified text.
+        /// <summary>Writes out a &lt;![CDATA[...]]&gt; block containing the specified text.</summary>
+        /// <param name="text">Text to place inside the CDATA block. </param>
+        /// <exception cref="T:System.ArgumentException">The text would result in a non-well formed XML document. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteCData(string text)
         {
             try
@@ -705,6 +760,10 @@ namespace System.Xml
         }
 
         // Writes out a comment <!--...--> containing the specified text.
+        /// <summary>Writes out a comment &lt;!--...--&gt; containing the specified text.</summary>
+        /// <param name="text">Text to place inside the comment. </param>
+        /// <exception cref="T:System.ArgumentException">The text would result in a non-well formed XML document </exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteComment(string text)
         {
             try
@@ -729,6 +788,10 @@ namespace System.Xml
         }
 
         // Writes out a processing instruction with a space between the name and text as follows: <?name text?>
+        /// <summary>Writes out a processing instruction with a space between the name and text as follows: &lt;?name text?&gt;.</summary>
+        /// <param name="name">Name of the processing instruction. </param>
+        /// <param name="text">Text to include in the processing instruction. </param>
+        /// <exception cref="T:System.ArgumentException">The text would result in a non-well formed XML document.<paramref name="name" /> is either null or String.Empty.This method is being used to create an XML declaration after <see cref="M:System.Xml.XmlTextWriter.WriteStartDocument" /> has already been called. </exception>
         public override void WriteProcessingInstruction(string name, string text)
         {
             try
@@ -752,6 +815,9 @@ namespace System.Xml
         }
 
         // Writes out an entity reference as follows: "&"+name+";".
+        /// <summary>Writes out an entity reference as &amp;name;.</summary>
+        /// <param name="name">Name of the entity reference. </param>
+        /// <exception cref="T:System.ArgumentException">The text would result in a non-well formed XML document or <paramref name="name" /> is either null or String.Empty. </exception>
         public override void WriteEntityRef(string name)
         {
             try
@@ -768,6 +834,10 @@ namespace System.Xml
         }
 
         // Forces the generation of a character entity for the specified Unicode character value.
+        /// <summary>Forces the generation of a character entity for the specified Unicode character value.</summary>
+        /// <param name="ch">Unicode character for which to generate a character entity. </param>
+        /// <exception cref="T:System.ArgumentException">The character is in the surrogate pair character range, 0xd800 - 0xdfff; or the text would result in a non-well formed XML document. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteCharEntity(char ch)
         {
             try
@@ -783,6 +853,9 @@ namespace System.Xml
         }
 
         // Writes out the given whitespace. 
+        /// <summary>Writes out the given white space.</summary>
+        /// <param name="ws">The string of white space characters. </param>
+        /// <exception cref="T:System.ArgumentException">The string contains non-white space characters. </exception>
         public override void WriteWhitespace(string ws)
         {
             try
@@ -807,6 +880,9 @@ namespace System.Xml
         }
 
         // Writes out the specified text content.
+        /// <summary>Writes the given text content.</summary>
+        /// <param name="text">Text to write. </param>
+        /// <exception cref="T:System.ArgumentException">The text string contains an invalid surrogate pair. </exception>
         public override void WriteString(string text)
         {
             try
@@ -825,6 +901,10 @@ namespace System.Xml
         }
 
         // Writes out the specified surrogate pair as a character entity.
+        /// <summary>Generates and writes the surrogate character entity for the surrogate character pair.</summary>
+        /// <param name="lowChar">The low surrogate. This must be a value between 0xDC00 and 0xDFFF. </param>
+        /// <param name="highChar">The high surrogate. This must be a value between 0xD800 and 0xDBFF. </param>
+        /// <exception cref="T:System.Exception">An invalid surrogate character pair was passed. </exception>
         public override void WriteSurrogateCharEntity(char lowChar, char highChar)
         {
             try
@@ -841,6 +921,13 @@ namespace System.Xml
 
 
         // Writes out the specified text content.
+        /// <summary>Writes text one buffer at a time.</summary>
+        /// <param name="buffer">Character array containing the text to write. </param>
+        /// <param name="index">The position in the buffer indicating the start of the text to write. </param>
+        /// <param name="count">The number of characters to write. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="buffer" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> or <paramref name="count" /> is less than zero. -or-The buffer length minus <paramref name="index" /> is less than <paramref name="count" />; the call results in surrogate pair characters being split or an invalid surrogate pair being written.</exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteChars(Char[] buffer, int index, int count)
         {
             try
@@ -856,6 +943,12 @@ namespace System.Xml
         }
 
         // Writes raw markup from the specified character buffer.
+        /// <summary>Writes raw markup manually from a character buffer.</summary>
+        /// <param name="buffer">Character array containing the text to write. </param>
+        /// <param name="index">The position within the buffer indicating the start of the text to write. </param>
+        /// <param name="count">The number of characters to write. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="buffer" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> or <paramref name="count" /> is less than zero.-or-The buffer length minus <paramref name="index" /> is less than <paramref name="count" />. </exception>
         public override void WriteRaw(Char[] buffer, int index, int count)
         {
             try
@@ -871,6 +964,8 @@ namespace System.Xml
         }
 
         // Writes raw markup from the specified character string.
+        /// <summary>Writes raw markup manually from a string.</summary>
+        /// <param name="data">String containing the text to write. </param>
         public override void WriteRaw(String data)
         {
             try
@@ -886,6 +981,14 @@ namespace System.Xml
         }
 
         // Encodes the specified binary bytes as base64 and writes out the resulting text.
+        /// <summary>Encodes the specified binary bytes as base64 and writes out the resulting text.</summary>
+        /// <param name="buffer">Byte array to encode. </param>
+        /// <param name="index">The position within the buffer indicating the start of the bytes to write. </param>
+        /// <param name="count">The number of bytes to write. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="buffer" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentException">The buffer length minus <paramref name="index" /> is less than <paramref name="count" />. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> or <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteBase64(byte[] buffer, int index, int count)
         {
             try
@@ -914,6 +1017,14 @@ namespace System.Xml
 
 
         // Encodes the specified binary bytes as binhex and writes out the resulting text.
+        /// <summary>Encodes the specified binary bytes as binhex and writes out the resulting text.</summary>
+        /// <param name="buffer">Byte array to encode. </param>
+        /// <param name="index">The position in the buffer indicating the start of the bytes to write. </param>
+        /// <param name="count">The number of bytes to write. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="buffer" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentException">The buffer length minus <paramref name="index" /> is less than <paramref name="count" />. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> or <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Xml.XmlTextWriter.WriteState" /> is Closed. </exception>
         public override void WriteBinHex(byte[] buffer, int index, int count)
         {
             try
@@ -929,6 +1040,8 @@ namespace System.Xml
         }
 
         // Returns the state of the XmlWriter.
+        /// <summary>Gets the state of the writer.</summary>
+        /// <returns>One of the <see cref="T:System.Xml.WriteState" /> values.</returns>
         public override WriteState WriteState
         {
             get
@@ -981,6 +1094,7 @@ namespace System.Xml
         }
 
         // Flushes whatever is in the buffer to the underlying stream/TextWriter and flushes the underlying stream/TextWriter.
+        /// <summary>Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.</summary>
         public override void Flush()
         {
             textWriter.Flush();
@@ -988,6 +1102,9 @@ namespace System.Xml
 
         // Writes out the specified name, ensuring it is a valid Name according to the XML specification 
         // (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name
+        /// <summary>Writes out the specified name, ensuring it is a valid name according to the W3C XML 1.0 recommendation (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name).</summary>
+        /// <param name="name">Name to write. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="name" /> is not a valid XML name; or <paramref name="name" /> is either null or String.Empty. </exception>
         public override void WriteName(string name)
         {
             try
@@ -1003,6 +1120,10 @@ namespace System.Xml
         }
 
         // Writes out the specified namespace-qualified name by looking up the prefix that is in scope for the given namespace.
+        /// <summary>Writes out the namespace-qualified name. This method looks up the prefix that is in scope for the given namespace.</summary>
+        /// <param name="localName">The local name to write. </param>
+        /// <param name="ns">The namespace URI to associate with the name. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="localName" /> is either null or String.Empty.<paramref name="localName" /> is not a valid name according to the W3C Namespaces spec. </exception>
         public override void WriteQualifiedName(string localName, string ns)
         {
             try
@@ -1043,6 +1164,10 @@ namespace System.Xml
         }
 
         // Returns the closest prefix defined in the current namespace scope for the specified namespace URI.
+        /// <summary>Returns the closest prefix defined in the current namespace scope for the namespace URI.</summary>
+        /// <returns>The matching prefix. Or null if no matching namespace URI is found in the current scope.</returns>
+        /// <param name="ns">Namespace URI whose prefix you want to find. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="ns" /> is either null or String.Empty. </exception>
         public override string LookupPrefix(string ns)
         {
             if (string.IsNullOrEmpty(ns))
@@ -1058,6 +1183,8 @@ namespace System.Xml
         }
 
         // Gets an XmlSpace representing the current xml:space scope. 
+        /// <summary>Gets an <see cref="T:System.Xml.XmlSpace" /> representing the current xml:space scope.</summary>
+        /// <returns>An XmlSpace representing the current xml:space scope.Value Meaning None This is the default if no xml:space scope exists. Default The current scope is xml:space="default". Preserve The current scope is xml:space="preserve". </returns>
         public override XmlSpace XmlSpace
         {
             get
@@ -1073,6 +1200,8 @@ namespace System.Xml
         }
 
         // Gets the current xml:lang scope.
+        /// <summary>Gets the current xml:lang scope.</summary>
+        /// <returns>The current xml:lang or null if there is no xml:lang in the current scope.</returns>
         public override string XmlLang
         {
             get
@@ -1089,6 +1218,9 @@ namespace System.Xml
 
         // Writes out the specified name, ensuring it is a valid NmToken
         // according to the XML specification (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name).
+        /// <summary>Writes out the specified name, ensuring it is a valid NmToken according to the W3C XML 1.0 recommendation (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name).</summary>
+        /// <param name="name">Name to write. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="name" /> is not a valid NmToken; or <paramref name="name" /> is either null or String.Empty. </exception>
         public override void WriteNmToken(string name)
         {
             try
