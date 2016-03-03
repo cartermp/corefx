@@ -23,6 +23,9 @@ namespace Microsoft.Win32.SafeHandles
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> class. </summary>
+        /// <param name="preexistingHandle">An <see cref="T:System.IntPtr" /> object that represents the pre-existing handle to use.</param>
+        /// <param name="ownsHandle">true to reliably release the handle during the finalization phase; false to prevent reliable release (not recommended).</param>
         public SafeFileHandle(IntPtr preexistingHandle, bool ownsHandle) : this(ownsHandle)
         {
             SetHandle(preexistingHandle);
@@ -45,7 +48,7 @@ namespace Microsoft.Win32.SafeHandles
             // Open the file. 
             SafeFileHandle handle = Interop.CheckIo(
                 Interop.Sys.Open(path, flags, mode),
-                path, 
+                path,
                 isDirectory: enoentDueToDirectory,
                 errorRewriter: e => (e.Error == Interop.Error.EISDIR) ? Interop.Error.EACCES.Info() : e);
 

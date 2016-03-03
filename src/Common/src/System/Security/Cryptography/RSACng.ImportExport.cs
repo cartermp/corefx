@@ -16,6 +16,7 @@ namespace System.Security.Cryptography
     internal static partial class RSAImplementation
     {
 #endif
+    /// <summary>Provides a Cryptography Next Generation (CNG) implementation of the RSA algorithm. </summary>
     public sealed partial class RSACng : RSA
     {
         /// <summary>

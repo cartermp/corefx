@@ -12,10 +12,13 @@ namespace Microsoft.Win32.SafeHandles
     // Other definitions of this type should be removed in favor of this definition.
     internal abstract class CriticalHandleZeroOrMinusOneIsInvalid : CriticalHandle
     {
+        /// <summary>Initializes a new instance of the <see cref="T:Microsoft.Win32.SafeHandles.CriticalHandleZeroOrMinusOneIsInvalid" /> class. </summary>
         protected CriticalHandleZeroOrMinusOneIsInvalid() : base(IntPtr.Zero)
         {
         }
 
+        /// <summary>Gets a value that indicates whether the handle is invalid.</summary>
+        /// <returns>true if the handle is not valid; otherwise, false.</returns>
         public override bool IsInvalid
         {
             get { return handle == new IntPtr(0) || handle == new IntPtr(-1); }
