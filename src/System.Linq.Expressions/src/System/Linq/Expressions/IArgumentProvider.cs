@@ -38,7 +38,12 @@ namespace System.Linq.Expressions
     /// </summary>
     public interface IArgumentProvider
     {
+        /// <summary>Returns the argument at index, throwing if index is out of bounds.  You should not use this type.  It is only public due to assembly refactoring, and it is used internally for performance optimizations.</summary>
+        /// <returns>The argument at index, throwing if index is out of bounds as <see cref="T:System.Linq.Expressions.Expression" />.</returns>
+        /// <param name="index">The index of the argument.</param>
         Expression GetArgument(int index);
+        /// <summary>Returns the number of arguments to the expression tree node.  You should not use this type.  It is only public due to assembly refactoring, and it is used internally for performance optimizations.</summary>
+        /// <returns>The number of arguments to the expression tree node as <see cref="T:System.Int32" />.</returns>
         int ArgumentCount
         {
             get;
