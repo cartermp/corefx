@@ -31,6 +31,8 @@ namespace System.Collections
 #if FEATURE_NETCORE
     [FriendAccessAllowed]
 #endif
+    /// <summary>Implements the <see cref="T:System.Collections.IList" /> interface using an array whose size is dynamically increased as required.To browse the .NET Framework source code for this type, see the Reference Source.</summary>
+    /// <filterpriority>1</filterpriority>
     [DebuggerTypeProxy(typeof(System.Collections.ArrayList.ArrayListDebugView))]
     [DebuggerDisplay("Count = {Count}")]
     public class ArrayList : IList
@@ -55,6 +57,7 @@ namespace System.Collections
         // Constructs a ArrayList. The list is initially empty and has a capacity
         // of zero. Upon adding the first element to the list the capacity is
         // increased to _defaultCapacity, and then increased in multiples of two as required.
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.ArrayList" /> class that is empty and has the default initial capacity.</summary>
         public ArrayList()
         {
             _items = Array.Empty<Object>();
@@ -64,6 +67,9 @@ namespace System.Collections
         // initially empty, but will have room for the given number of elements
         // before any reallocations are required.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.ArrayList" /> class that is empty and has the specified initial capacity.</summary>
+        /// <param name="capacity">The number of elements that the new list can initially store. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero. </exception>
         public ArrayList(int capacity)
         {
             if (capacity < 0) throw new ArgumentOutOfRangeException(nameof(capacity), SR.Format(SR.ArgumentOutOfRange_MustBeNonNegNum, nameof(capacity)));
@@ -79,6 +85,9 @@ namespace System.Collections
         // size and capacity of the new list will both be equal to the size of the
         // given collection.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.ArrayList" /> class that contains elements copied from the specified collection and that has the same initial capacity as the number of elements copied.</summary>
+        /// <param name="c">The <see cref="T:System.Collections.ICollection" /> whose elements are copied to the new list. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="c" /> is null. </exception>
         public ArrayList(ICollection c)
         {
             if (c == null)
@@ -101,6 +110,11 @@ namespace System.Collections
         // the internal array used to hold items.  When set, the internal 
         // array of the list is reallocated to the given capacity.
         // 
+        /// <summary>Gets or sets the number of elements that the <see cref="T:System.Collections.ArrayList" /> can contain.</summary>
+        /// <returns>The number of elements that the <see cref="T:System.Collections.ArrayList" /> can contain.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><see cref="P:System.Collections.ArrayList.Capacity" /> is set to a value that is less than <see cref="P:System.Collections.ArrayList.Count" />.</exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough memory available on the system.</exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int Capacity
         {
             get
@@ -138,6 +152,9 @@ namespace System.Collections
         }
 
         // Read-only property describing how many elements are in the List.
+        /// <summary>Gets the number of elements actually contained in the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>The number of elements actually contained in the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual int Count
         {
             get
@@ -147,6 +164,9 @@ namespace System.Collections
             }
         }
 
+        /// <summary>Gets a value indicating whether the <see cref="T:System.Collections.ArrayList" /> has a fixed size.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.ArrayList" /> has a fixed size; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsFixedSize
         {
             get { return false; }
@@ -154,18 +174,27 @@ namespace System.Collections
 
 
         // Is this ArrayList read-only?
+        /// <summary>Gets a value indicating whether the <see cref="T:System.Collections.ArrayList" /> is read-only.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.ArrayList" /> is read-only; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsReadOnly
         {
             get { return false; }
         }
 
         // Is this ArrayList synchronized (thread-safe)?
+        /// <summary>Gets a value indicating whether access to the <see cref="T:System.Collections.ArrayList" /> is synchronized (thread safe).</summary>
+        /// <returns>true if access to the <see cref="T:System.Collections.ArrayList" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsSynchronized
         {
             get { return false; }
         }
 
         // Synchronization root for this object.
+        /// <summary>Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>An object that can be used to synchronize access to the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object SyncRoot
         {
             get
@@ -180,6 +209,11 @@ namespace System.Collections
 
         // Sets or Gets the element at the given index.
         // 
+        /// <summary>Gets or sets the element at the specified index.</summary>
+        /// <returns>The element at the specified index.</returns>
+        /// <param name="index">The zero-based index of the element to get or set. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="index" /> is equal to or greater than <see cref="P:System.Collections.ArrayList.Count" />. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual Object this[int index]
         {
             get
@@ -205,6 +239,11 @@ namespace System.Collections
         // However, since these methods are generic, the performance may not be
         // nearly as good for some operations as they would be on the IList itself.
         //
+        /// <summary>Creates an <see cref="T:System.Collections.ArrayList" /> wrapper for a specific <see cref="T:System.Collections.IList" />.</summary>
+        /// <returns>The <see cref="T:System.Collections.ArrayList" /> wrapper around the <see cref="T:System.Collections.IList" />.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.IList" /> to wrap.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null.</exception>
+        /// <filterpriority>2</filterpriority>
         public static ArrayList Adapter(IList list)
         {
             if (list == null)
@@ -218,6 +257,11 @@ namespace System.Collections
         // increased by one. If required, the capacity of the list is doubled
         // before adding the new element.
         //
+        /// <summary>Adds an object to the end of the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>The <see cref="T:System.Collections.ArrayList" /> index at which the <paramref name="value" /> has been added.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to be added to the end of the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int Add(Object value)
         {
             Contract.Ensures(Contract.Result<int>() >= 0);
@@ -231,6 +275,11 @@ namespace System.Collections
         // required, the capacity of the list is increased to twice the previous
         // capacity or the new size, whichever is larger.
         //
+        /// <summary>Adds the elements of an <see cref="T:System.Collections.ICollection" /> to the end of the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <param name="c">The <see cref="T:System.Collections.ICollection" /> whose elements should be added to the end of the <see cref="T:System.Collections.ArrayList" />. The collection itself cannot be null, but it can contain elements that are null. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="c" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void AddRange(ICollection c)
         {
             InsertRange(_size, c);
@@ -256,6 +305,16 @@ namespace System.Collections
         // The method uses the Array.BinarySearch method to perform the
         // search.
         // 
+        /// <summary>Searches a range of elements in the sorted <see cref="T:System.Collections.ArrayList" /> for an element using the specified comparer and returns the zero-based index of the element.</summary>
+        /// <returns>The zero-based index of <paramref name="value" /> in the sorted <see cref="T:System.Collections.ArrayList" />, if <paramref name="value" /> is found; otherwise, a negative number, which is the bitwise complement of the index of the next element that is larger than <paramref name="value" /> or, if there is no larger element, the bitwise complement of <see cref="P:System.Collections.ArrayList.Count" />.</returns>
+        /// <param name="index">The zero-based starting index of the range to search. </param>
+        /// <param name="count">The length of the range to search. </param>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate. The value can be null. </param>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing elements.-or- null to use the default comparer that is the <see cref="T:System.IComparable" /> implementation of each element. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not denote a valid range in the <see cref="T:System.Collections.ArrayList" />.-or- <paramref name="comparer" /> is null and neither <paramref name="value" /> nor the elements of <see cref="T:System.Collections.ArrayList" /> implement the <see cref="T:System.IComparable" /> interface. </exception>
+        /// <exception cref="T:System.InvalidOperationException"><paramref name="comparer" /> is null and <paramref name="value" /> is not of the same type as the elements of the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int BinarySearch(int index, int count, Object value, IComparer comparer)
         {
             if (index < 0)
@@ -271,12 +330,25 @@ namespace System.Collections
             return Array.BinarySearch((Array)_items, index, count, value, comparer);
         }
 
+        /// <summary>Searches the entire sorted <see cref="T:System.Collections.ArrayList" /> for an element using the default comparer and returns the zero-based index of the element.</summary>
+        /// <returns>The zero-based index of <paramref name="value" /> in the sorted <see cref="T:System.Collections.ArrayList" />, if <paramref name="value" /> is found; otherwise, a negative number, which is the bitwise complement of the index of the next element that is larger than <paramref name="value" /> or, if there is no larger element, the bitwise complement of <see cref="P:System.Collections.ArrayList.Count" />.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate. The value can be null. </param>
+        /// <exception cref="T:System.ArgumentException">Neither <paramref name="value" /> nor the elements of <see cref="T:System.Collections.ArrayList" /> implement the <see cref="T:System.IComparable" /> interface. </exception>
+        /// <exception cref="T:System.InvalidOperationException"><paramref name="value" /> is not of the same type as the elements of the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int BinarySearch(Object value)
         {
             Contract.Ensures(Contract.Result<int>() < Count);
             return BinarySearch(0, Count, value, null);
         }
 
+        /// <summary>Searches the entire sorted <see cref="T:System.Collections.ArrayList" /> for an element using the specified comparer and returns the zero-based index of the element.</summary>
+        /// <returns>The zero-based index of <paramref name="value" /> in the sorted <see cref="T:System.Collections.ArrayList" />, if <paramref name="value" /> is found; otherwise, a negative number, which is the bitwise complement of the index of the next element that is larger than <paramref name="value" /> or, if there is no larger element, the bitwise complement of <see cref="P:System.Collections.ArrayList.Count" />.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate. The value can be null. </param>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing elements.-or- null to use the default comparer that is the <see cref="T:System.IComparable" /> implementation of each element. </param>
+        /// <exception cref="T:System.ArgumentException"><paramref name="comparer" /> is null and neither <paramref name="value" /> nor the elements of <see cref="T:System.Collections.ArrayList" /> implement the <see cref="T:System.IComparable" /> interface. </exception>
+        /// <exception cref="T:System.InvalidOperationException"><paramref name="comparer" /> is null and <paramref name="value" /> is not of the same type as the elements of the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int BinarySearch(Object value, IComparer comparer)
         {
             Contract.Ensures(Contract.Result<int>() < Count);
@@ -285,6 +357,9 @@ namespace System.Collections
 
 
         // Clears the contents of ArrayList.
+        /// <summary>Removes all elements from the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Clear()
         {
             if (_size > 0)
@@ -298,6 +373,9 @@ namespace System.Collections
         // Clones this ArrayList, doing a shallow copy.  (A copy is made of all
         // Object references in the ArrayList, but the Objects pointed to 
         // are not cloned).
+        /// <summary>Creates a shallow copy of the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>A shallow copy of the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object Clone()
         {
             Contract.Ensures(Contract.Result<Object>() != null);
@@ -313,6 +391,10 @@ namespace System.Collections
         // It does a linear, O(n) search.  Equality is determined by calling
         // item.Equals().
         //
+        /// <summary>Determines whether an element is in the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>true if <paramref name="item" /> is found in the <see cref="T:System.Collections.ArrayList" />; otherwise, false.</returns>
+        /// <param name="item">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <filterpriority>1</filterpriority>
         public virtual bool Contains(Object item)
         {
             if (item == null)
@@ -334,6 +416,12 @@ namespace System.Collections
         // Copies this ArrayList into array, which must be of a 
         // compatible array type.  
         //
+        /// <summary>Copies the entire <see cref="T:System.Collections.ArrayList" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the beginning of the target array.</summary>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ArrayList" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.ArrayList" /> is greater than the number of elements that the destination <paramref name="array" /> can contain. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ArrayList" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(Array array)
         {
             CopyTo(array, 0);
@@ -342,6 +430,14 @@ namespace System.Collections
         // Copies this ArrayList into array, which must be of a 
         // compatible array type.  
         //
+        /// <summary>Copies the entire <see cref="T:System.Collections.ArrayList" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ArrayList" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.ArrayList" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ArrayList" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(Array array, int arrayIndex)
         {
             if ((array != null) && (array.Rank != 1))
@@ -355,6 +451,16 @@ namespace System.Collections
         // 
         // The method uses the Array.Copy method to copy the elements.
         // 
+        /// <summary>Copies a range of elements from the <see cref="T:System.Collections.ArrayList" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+        /// <param name="index">The zero-based index in the source <see cref="T:System.Collections.ArrayList" /> at which copying begins. </param>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ArrayList" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+        /// <param name="count">The number of elements to copy. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="arrayIndex" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- <paramref name="index" /> is equal to or greater than the <see cref="P:System.Collections.ArrayList.Count" /> of the source <see cref="T:System.Collections.ArrayList" />.-or- The number of elements from <paramref name="index" /> to the end of the source <see cref="T:System.Collections.ArrayList" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ArrayList" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(int index, Array array, int arrayIndex, int count)
         {
             if (_size - index < count)
@@ -386,6 +492,11 @@ namespace System.Collections
         // Returns a list wrapper that is fixed at the current size.  Operations
         // that add or remove items will fail, however, replacing items is allowed.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.IList" /> wrapper with a fixed size.</summary>
+        /// <returns>An <see cref="T:System.Collections.IList" /> wrapper with a fixed size.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.IList" /> to wrap. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static IList FixedSize(IList list)
         {
             if (list == null)
@@ -398,6 +509,11 @@ namespace System.Collections
         // Returns a list wrapper that is fixed at the current size.  Operations
         // that add or remove items will fail, however, replacing items is allowed.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.ArrayList" /> wrapper with a fixed size.</summary>
+        /// <returns>An <see cref="T:System.Collections.ArrayList" /> wrapper with a fixed size.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.ArrayList" /> to wrap. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static ArrayList FixedSize(ArrayList list)
         {
             if (list == null)
@@ -412,6 +528,9 @@ namespace System.Collections
         // while an enumeration is in progress, the MoveNext and 
         // GetObject methods of the enumerator will throw an exception.
         //
+        /// <summary>Returns an enumerator for the entire <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IEnumerator GetEnumerator()
         {
             Contract.Ensures(Contract.Result<IEnumerator>() != null);
@@ -423,6 +542,13 @@ namespace System.Collections
         // while an enumeration is in progress, the MoveNext and 
         // GetObject methods of the enumerator will throw an exception.
         //
+        /// <summary>Returns an enumerator for a range of elements in the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> for the specified range of elements in the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <param name="index">The zero-based starting index of the <see cref="T:System.Collections.ArrayList" /> section that the enumerator should refer to. </param>
+        /// <param name="count">The number of elements in the <see cref="T:System.Collections.ArrayList" /> section that the enumerator should refer to. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not specify a valid range in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual IEnumerator GetEnumerator(int index, int count)
         {
             if (index < 0)
@@ -445,6 +571,10 @@ namespace System.Collections
         // This method uses the Array.IndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the first occurrence within the entire <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>The zero-based index of the first occurrence of <paramref name="value" /> within the entire <see cref="T:System.Collections.ArrayList" />, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <filterpriority>1</filterpriority>
         public virtual int IndexOf(Object value)
         {
             Contract.Ensures(Contract.Result<int>() < Count);
@@ -460,6 +590,12 @@ namespace System.Collections
         // This method uses the Array.IndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the first occurrence within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that extends from the specified index to the last element.</summary>
+        /// <returns>The zero-based index of the first occurrence of <paramref name="value" /> within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that extends from <paramref name="startIndex" /> to the last element, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <param name="startIndex">The zero-based starting index of the search. 0 (zero) is valid in an empty list.</param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex" /> is outside the range of valid indexes for the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int IndexOf(Object value, int startIndex)
         {
             if (startIndex > _size)
@@ -478,6 +614,13 @@ namespace System.Collections
         // This method uses the Array.IndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the first occurrence within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that starts at the specified index and contains the specified number of elements.</summary>
+        /// <returns>The zero-based index of the first occurrence of <paramref name="value" /> within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that starts at <paramref name="startIndex" /> and contains <paramref name="count" /> number of elements, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <param name="startIndex">The zero-based starting index of the search. 0 (zero) is valid in an empty list.</param>
+        /// <param name="count">The number of elements in the section to search. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex" /> is outside the range of valid indexes for the <see cref="T:System.Collections.ArrayList" />.-or- <paramref name="count" /> is less than zero.-or- <paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int IndexOf(Object value, int startIndex, int count)
         {
             if (startIndex > _size)
@@ -492,6 +635,12 @@ namespace System.Collections
         // is increased by one. If required, the capacity of the list is doubled
         // before inserting the new element.
         // 
+        /// <summary>Inserts an element into the <see cref="T:System.Collections.ArrayList" /> at the specified index.</summary>
+        /// <param name="index">The zero-based index at which <paramref name="value" /> should be inserted. </param>
+        /// <param name="value">The <see cref="T:System.Object" /> to insert. The value can be null. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="index" /> is greater than <see cref="P:System.Collections.ArrayList.Count" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Insert(int index, Object value)
         {
             // Note that insertions at the end are legal.
@@ -514,6 +663,13 @@ namespace System.Collections
         // capacity or the new size, whichever is larger.  Ranges may be added
         // to the end of the list by setting index to the ArrayList's size.
         //
+        /// <summary>Inserts the elements of a collection into the <see cref="T:System.Collections.ArrayList" /> at the specified index.</summary>
+        /// <param name="index">The zero-based index at which the new elements should be inserted. </param>
+        /// <param name="c">The <see cref="T:System.Collections.ICollection" /> whose elements should be inserted into the <see cref="T:System.Collections.ArrayList" />. The collection itself cannot be null, but it can contain elements that are null. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="c" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="index" /> is greater than <see cref="P:System.Collections.ArrayList.Count" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void InsertRange(int index, ICollection c)
         {
             if (c == null)
@@ -548,6 +704,10 @@ namespace System.Collections
         // This method uses the Array.LastIndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the last occurrence within the entire <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>The zero-based index of the last occurrence of <paramref name="value" /> within the entire the <see cref="T:System.Collections.ArrayList" />, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <filterpriority>2</filterpriority>
         public virtual int LastIndexOf(Object value)
         {
             Contract.Ensures(Contract.Result<int>() < _size);
@@ -563,6 +723,12 @@ namespace System.Collections
         // This method uses the Array.LastIndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the last occurrence within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that extends from the first element to the specified index.</summary>
+        /// <returns>The zero-based index of the last occurrence of <paramref name="value" /> within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that extends from the first element to <paramref name="startIndex" />, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <param name="startIndex">The zero-based starting index of the backward search. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex" /> is outside the range of valid indexes for the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual int LastIndexOf(Object value, int startIndex)
         {
             if (startIndex >= _size)
@@ -581,6 +747,13 @@ namespace System.Collections
         // This method uses the Array.LastIndexOf method to perform the
         // search.
         // 
+        /// <summary>Searches for the specified <see cref="T:System.Object" /> and returns the zero-based index of the last occurrence within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that contains the specified number of elements and ends at the specified index.</summary>
+        /// <returns>The zero-based index of the last occurrence of <paramref name="value" /> within the range of elements in the <see cref="T:System.Collections.ArrayList" /> that contains <paramref name="count" /> number of elements and ends at <paramref name="startIndex" />, if found; otherwise, -1.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <param name="startIndex">The zero-based starting index of the backward search. </param>
+        /// <param name="count">The number of elements in the section to search. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex" /> is outside the range of valid indexes for the <see cref="T:System.Collections.ArrayList" />.-or- <paramref name="count" /> is less than zero.-or- <paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual int LastIndexOf(Object value, int startIndex, int count)
         {
             if (Count != 0 && (startIndex < 0 || count < 0))
@@ -602,6 +775,11 @@ namespace System.Collections
 #if FEATURE_NETCORE
         [FriendAccessAllowed]
 #endif
+        /// <summary>Returns a read-only <see cref="T:System.Collections.IList" /> wrapper.</summary>
+        /// <returns>A read-only <see cref="T:System.Collections.IList" /> wrapper around <paramref name="list" />.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.IList" /> to wrap. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static IList ReadOnly(IList list)
         {
             if (list == null)
@@ -613,6 +791,11 @@ namespace System.Collections
 
         // Returns a read-only ArrayList wrapper for the given ArrayList.
         //
+        /// <summary>Returns a read-only <see cref="T:System.Collections.ArrayList" /> wrapper.</summary>
+        /// <returns>A read-only <see cref="T:System.Collections.ArrayList" /> wrapper around <paramref name="list" />.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.ArrayList" /> to wrap. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static ArrayList ReadOnly(ArrayList list)
         {
             if (list == null)
@@ -625,6 +808,10 @@ namespace System.Collections
         // Removes the element at the given index. The size of the list is
         // decreased by one.
         // 
+        /// <summary>Removes the first occurrence of a specific object from the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <param name="obj">The <see cref="T:System.Object" /> to remove from the <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Remove(Object obj)
         {
             Contract.Ensures(Count >= 0);
@@ -638,6 +825,11 @@ namespace System.Collections
         // Removes the element at the given index. The size of the list is
         // decreased by one.
         // 
+        /// <summary>Removes the element at the specified index of the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <param name="index">The zero-based index of the element to remove. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="index" /> is equal to or greater than <see cref="P:System.Collections.ArrayList.Count" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void RemoveAt(int index)
         {
             if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException(nameof(index), SR.ArgumentOutOfRange_Index);
@@ -656,6 +848,13 @@ namespace System.Collections
 
         // Removes a range of elements from this list.
         // 
+        /// <summary>Removes a range of elements from the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <param name="index">The zero-based starting index of the range of elements to remove. </param>
+        /// <param name="count">The number of elements to remove. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not denote a valid range of elements in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void RemoveRange(int index, int count)
         {
             if (index < 0)
@@ -683,6 +882,12 @@ namespace System.Collections
 
         // Returns an IList that contains count copies of value.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.ArrayList" /> whose elements are copies of the specified value.</summary>
+        /// <returns>An <see cref="T:System.Collections.ArrayList" /> with <paramref name="count" /> number of elements, all of which are copies of <paramref name="value" />.</returns>
+        /// <param name="value">The <see cref="T:System.Object" /> to copy multiple times in the new <see cref="T:System.Collections.ArrayList" />. The value can be null. </param>
+        /// <param name="count">The number of times <paramref name="value" /> should be copied. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="count" /> is less than zero. </exception>
+        /// <filterpriority>2</filterpriority>
         public static ArrayList Repeat(Object value, int count)
         {
             if (count < 0)
@@ -697,6 +902,9 @@ namespace System.Collections
         }
 
         // Reverses the elements in this list.
+        /// <summary>Reverses the order of the elements in the entire <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void Reverse()
         {
             Reverse(0, Count);
@@ -710,6 +918,13 @@ namespace System.Collections
         // This method uses the Array.Reverse method to reverse the
         // elements.
         // 
+        /// <summary>Reverses the order of the elements in the specified range.</summary>
+        /// <param name="index">The zero-based starting index of the range to reverse. </param>
+        /// <param name="count">The number of elements in the range to reverse. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not denote a valid range of elements in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void Reverse(int index, int count)
         {
             if (index < 0)
@@ -726,6 +941,13 @@ namespace System.Collections
         // Sets the elements starting at the given index to the elements of the
         // given collection.
         //
+        /// <summary>Copies the elements of a collection over a range of elements in the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <param name="index">The zero-based <see cref="T:System.Collections.ArrayList" /> index at which to start copying the elements of <paramref name="c" />. </param>
+        /// <param name="c">The <see cref="T:System.Collections.ICollection" /> whose elements to copy to the <see cref="T:System.Collections.ArrayList" />. The collection itself cannot be null, but it can contain elements that are null. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="index" /> plus the number of elements in <paramref name="c" /> is greater than <see cref="P:System.Collections.ArrayList.Count" />. </exception>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="c" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void SetRange(int index, ICollection c)
         {
             if (c == null) throw new ArgumentNullException(nameof(c), SR.ArgumentNull_Collection);
@@ -740,6 +962,13 @@ namespace System.Collections
             }
         }
 
+        /// <summary>Returns an <see cref="T:System.Collections.ArrayList" /> which represents a subset of the elements in the source <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.ArrayList" /> which represents a subset of the elements in the source <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <param name="index">The zero-based <see cref="T:System.Collections.ArrayList" /> index at which the range starts. </param>
+        /// <param name="count">The number of elements in the range. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not denote a valid range of elements in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual ArrayList GetRange(int index, int count)
         {
             if (index < 0 || count < 0)
@@ -753,6 +982,9 @@ namespace System.Collections
 
         // Sorts the elements in this list.  Uses the default comparer and 
         // Array.Sort.
+        /// <summary>Sorts the elements in the entire <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Sort()
         {
             Sort(0, Count, Comparer.Default);
@@ -760,6 +992,12 @@ namespace System.Collections
 
         // Sorts the elements in this list.  Uses Array.Sort with the
         // provided comparer.
+        /// <summary>Sorts the elements in the entire <see cref="T:System.Collections.ArrayList" /> using the specified comparer.</summary>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing elements.-or- A null reference (Nothing in Visual Basic) to use the <see cref="T:System.IComparable" /> implementation of each element. </param>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <exception cref="T:System.InvalidOperationException">An error occurred while comparing two elements.</exception>
+        /// <exception cref="T:System.ArgumentException">null is passed for <paramref name="comparer" />, and the elements in the list do not implement <see cref="T:System.IComparable" />.</exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Sort(IComparer comparer)
         {
             Sort(0, Count, comparer);
@@ -773,6 +1011,15 @@ namespace System.Collections
         // 
         // This method uses the Array.Sort method to sort the elements.
         // 
+        /// <summary>Sorts the elements in a range of elements in <see cref="T:System.Collections.ArrayList" /> using the specified comparer.</summary>
+        /// <param name="index">The zero-based starting index of the range to sort. </param>
+        /// <param name="count">The length of the range to sort. </param>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing elements.-or- A null reference (Nothing in Visual Basic) to use the <see cref="T:System.IComparable" /> implementation of each element. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero.-or- <paramref name="count" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="index" /> and <paramref name="count" /> do not specify a valid range in the <see cref="T:System.Collections.ArrayList" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only. </exception>
+        /// <exception cref="T:System.InvalidOperationException">An error occurred while comparing two elements.</exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Sort(int index, int count, IComparer comparer)
         {
             if (index < 0)
@@ -789,6 +1036,11 @@ namespace System.Collections
 
         // Returns a thread-safe wrapper around an IList.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.IList" /> wrapper that is synchronized (thread safe).</summary>
+        /// <returns>An <see cref="T:System.Collections.IList" /> wrapper that is synchronized (thread safe).</returns>
+        /// <param name="list">The <see cref="T:System.Collections.IList" /> to synchronize. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static IList Synchronized(IList list)
         {
             if (list == null)
@@ -800,6 +1052,11 @@ namespace System.Collections
 
         // Returns a thread-safe wrapper around a ArrayList.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.ArrayList" /> wrapper that is synchronized (thread safe).</summary>
+        /// <returns>An <see cref="T:System.Collections.ArrayList" /> wrapper that is synchronized (thread safe).</returns>
+        /// <param name="list">The <see cref="T:System.Collections.ArrayList" /> to synchronize. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>2</filterpriority>
         public static ArrayList Synchronized(ArrayList list)
         {
             if (list == null)
@@ -811,6 +1068,9 @@ namespace System.Collections
 
         // ToArray returns a new Object array containing the contents of the ArrayList.
         // This requires copying the ArrayList, which is an O(n) operation.
+        /// <summary>Copies the elements of the <see cref="T:System.Collections.ArrayList" /> to a new <see cref="T:System.Object" /> array.</summary>
+        /// <returns>An <see cref="T:System.Object" /> array containing copies of the elements of the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual Object[] ToArray()
         {
             Contract.Ensures(Contract.Result<Object[]>() != null);
@@ -828,6 +1088,12 @@ namespace System.Collections
         // downcasting all elements.  This copy may fail and is an O(n) operation.
         // Internally, this implementation calls Array.Copy.
         //
+        /// <summary>Copies the elements of the <see cref="T:System.Collections.ArrayList" /> to a new array of the specified element type.</summary>
+        /// <returns>An array of the specified element type containing copies of the elements of the <see cref="T:System.Collections.ArrayList" />.</returns>
+        /// <param name="type">The element <see cref="T:System.Type" /> of the destination array to create and copy elements to.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="type" /> is null. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ArrayList" /> cannot be cast automatically to the specified type. </exception>
+        /// <filterpriority>1</filterpriority>
         [SecuritySafeCritical]
         public virtual Array ToArray(Type type)
         {
@@ -849,6 +1115,9 @@ namespace System.Collections
         // list.Clear();
         // list.TrimToSize();
         // 
+        /// <summary>Sets the capacity to the actual number of elements in the <see cref="T:System.Collections.ArrayList" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.ArrayList" /> is read-only.-or- The <see cref="T:System.Collections.ArrayList" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void TrimToSize()
         {
             Capacity = _size;

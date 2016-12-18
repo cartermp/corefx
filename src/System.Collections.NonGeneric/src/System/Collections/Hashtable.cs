@@ -52,6 +52,8 @@ namespace System.Collections
     // the Hashtable.  That hash function (and the equals method on the 
     // IEqualityComparer) would be used for all objects in the table.
     //
+    /// <summary>Represents a collection of key/value pairs that are organized based on the hash code of the key.To browse the .NET Framework source code for this type, see the Reference Source.</summary>
+    /// <filterpriority>1</filterpriority>
     [DebuggerTypeProxy(typeof(System.Collections.Hashtable.HashtableDebugView))]
     [DebuggerDisplay("Count = {Count}")]
     public class Hashtable : IDictionary
@@ -141,6 +143,9 @@ namespace System.Collections
         private IEqualityComparer _keycomparer;
         private Object _syncRoot;
 
+        /// <summary>Gets the <see cref="T:System.Collections.IEqualityComparer" /> to use for the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>The <see cref="T:System.Collections.IEqualityComparer" /> to use for the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <exception cref="T:System.ArgumentException">The property is set to a value, but the hash table was created using an <see cref="T:System.Collections.IHashCodeProvider" /> and an <see cref="T:System.Collections.IComparer" />. </exception>
         protected IEqualityComparer EqualityComparer
         {
             get
@@ -157,6 +162,7 @@ namespace System.Collections
 
         // Constructs a new hashtable. The hashtable is created with an initial
         // capacity of zero and a load factor of 1.0.
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the default initial capacity, load factor, hash code provider, and comparer.</summary>
         public Hashtable() : this(0, 1.0f)
         {
         }
@@ -168,6 +174,9 @@ namespace System.Collections
         // eliminate a number of resizing operations that would otherwise be
         // performed when elements are added to the hashtable.
         // 
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the specified initial capacity, and the default load factor, hash code provider, and comparer.</summary>
+        /// <param name="capacity">The approximate number of elements that the <see cref="T:System.Collections.Hashtable" /> object can initially contain. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero. </exception>
         public Hashtable(int capacity) : this(capacity, 1.0f)
         {
         }
@@ -183,6 +192,11 @@ namespace System.Collections
         // increased memory consumption. A load factor of 1.0 generally provides
         // the best balance between speed and size.
         // 
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the specified initial capacity and load factor, and the default hash code provider and comparer.</summary>
+        /// <param name="capacity">The approximate number of elements that the <see cref="T:System.Collections.Hashtable" /> object can initially contain. </param>
+        /// <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero.-or- <paramref name="loadFactor" /> is less than 0.1.-or- <paramref name="loadFactor" /> is greater than 1.0. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="capacity" /> is causing an overflow.</exception>
         public Hashtable(int capacity, float loadFactor)
         {
             if (capacity < 0)
@@ -208,15 +222,26 @@ namespace System.Collections
             Debug.Assert(_loadsize < hashsize, "Invalid hashtable loadsize!");
         }
 
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the specified initial capacity, load factor, and <see cref="T:System.Collections.IEqualityComparer" /> object.</summary>
+        /// <param name="capacity">The approximate number of elements that the <see cref="T:System.Collections.Hashtable" /> object can initially contain. </param>
+        /// <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        /// <param name="equalityComparer">The <see cref="T:System.Collections.IEqualityComparer" /> object that defines the hash code provider and the comparer to use with the <see cref="T:System.Collections.Hashtable" />.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="M:System.Object.GetHashCode" /> and the default comparer is each key's implementation of <see cref="M:System.Object.Equals(System.Object)" />. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero.-or- <paramref name="loadFactor" /> is less than 0.1.-or- <paramref name="loadFactor" /> is greater than 1.0. </exception>
         public Hashtable(int capacity, float loadFactor, IEqualityComparer equalityComparer) : this(capacity, loadFactor)
         {
             _keycomparer = equalityComparer;
         }
 
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the default initial capacity and load factor, and the specified <see cref="T:System.Collections.IEqualityComparer" /> object.</summary>
+        /// <param name="equalityComparer">The <see cref="T:System.Collections.IEqualityComparer" /> object that defines the hash code provider and the comparer to use with the <see cref="T:System.Collections.Hashtable" /> object.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="M:System.Object.GetHashCode" /> and the default comparer is each key's implementation of <see cref="M:System.Object.Equals(System.Object)" />. </param>
         public Hashtable(IEqualityComparer equalityComparer) : this(0, 1.0f, equalityComparer)
         {
         }
 
+        /// <summary>Initializes a new, empty instance of the <see cref="T:System.Collections.Hashtable" /> class using the specified initial capacity and <see cref="T:System.Collections.IEqualityComparer" />, and the default load factor.</summary>
+        /// <param name="capacity">The approximate number of elements that the <see cref="T:System.Collections.Hashtable" /> object can initially contain. </param>
+        /// <param name="equalityComparer">The <see cref="T:System.Collections.IEqualityComparer" /> object that defines the hash code provider and the comparer to use with the <see cref="T:System.Collections.Hashtable" />.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="M:System.Object.GetHashCode" /> and the default comparer is each key's implementation of <see cref="M:System.Object.Equals(System.Object)" />. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero. </exception>
         public Hashtable(int capacity, IEqualityComparer equalityComparer)
             : this(capacity, 1.0f, equalityComparer)
         {
@@ -225,6 +250,9 @@ namespace System.Collections
         // Constructs a new hashtable containing a copy of the entries in the given
         // dictionary. The hashtable is created with a load factor of 1.0.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Hashtable" /> class by copying the elements from the specified dictionary to the new <see cref="T:System.Collections.Hashtable" /> object. The new <see cref="T:System.Collections.Hashtable" /> object has an initial capacity equal to the number of elements copied, and uses the default load factor, hash code provider, and comparer.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> object to copy to a new <see cref="T:System.Collections.Hashtable" /> object. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
         public Hashtable(IDictionary d) : this(d, 1.0f)
         {
         }
@@ -232,16 +260,31 @@ namespace System.Collections
         // Constructs a new hashtable containing a copy of the entries in the given
         // dictionary. The hashtable is created with the given load factor.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Hashtable" /> class by copying the elements from the specified dictionary to the new <see cref="T:System.Collections.Hashtable" /> object. The new <see cref="T:System.Collections.Hashtable" /> object has an initial capacity equal to the number of elements copied, and uses the specified load factor, and the default hash code provider and comparer.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> object to copy to a new <see cref="T:System.Collections.Hashtable" /> object.</param>
+        /// <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="loadFactor" /> is less than 0.1.-or- <paramref name="loadFactor" /> is greater than 1.0. </exception>
         public Hashtable(IDictionary d, float loadFactor)
             : this(d, loadFactor, (IEqualityComparer)null)
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Hashtable" /> class by copying the elements from the specified dictionary to a new <see cref="T:System.Collections.Hashtable" /> object. The new <see cref="T:System.Collections.Hashtable" /> object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified <see cref="T:System.Collections.IEqualityComparer" /> object.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> object to copy to a new <see cref="T:System.Collections.Hashtable" /> object.</param>
+        /// <param name="equalityComparer">The <see cref="T:System.Collections.IEqualityComparer" /> object that defines the hash code provider and the comparer to use with the <see cref="T:System.Collections.Hashtable" />.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="M:System.Object.GetHashCode" /> and the default comparer is each key's implementation of <see cref="M:System.Object.Equals(System.Object)" />. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
         public Hashtable(IDictionary d, IEqualityComparer equalityComparer)
             : this(d, 1.0f, equalityComparer)
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.Hashtable" /> class by copying the elements from the specified dictionary to the new <see cref="T:System.Collections.Hashtable" /> object. The new <see cref="T:System.Collections.Hashtable" /> object has an initial capacity equal to the number of elements copied, and uses the specified load factor and <see cref="T:System.Collections.IEqualityComparer" /> object.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> object to copy to a new <see cref="T:System.Collections.Hashtable" /> object.</param>
+        /// <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        /// <param name="equalityComparer">The <see cref="T:System.Collections.IEqualityComparer" /> object that defines the hash code provider and the comparer to use with the <see cref="T:System.Collections.Hashtable" />.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="M:System.Object.GetHashCode" /> and the default comparer is each key's implementation of <see cref="M:System.Object.Equals(System.Object)" />. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="loadFactor" /> is less than 0.1.-or- <paramref name="loadFactor" /> is greater than 1.0. </exception>
         public Hashtable(IDictionary d, float loadFactor, IEqualityComparer equalityComparer)
             : this((d != null ? d.Count : 0), loadFactor, equalityComparer)
         {
@@ -292,12 +335,22 @@ namespace System.Collections
         // ArgumentException is thrown if the key is null or if the key is already
         // present in the hashtable.
         // 
+        /// <summary>Adds an element with the specified key and value into the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <param name="key">The key of the element to add. </param>
+        /// <param name="value">The value of the element to add. The value can be null. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Hashtable" />. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Hashtable" /> is read-only.-or- The <see cref="T:System.Collections.Hashtable" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Add(Object key, Object value)
         {
             Insert(key, value, true);
         }
 
         // Removes all entries from this hashtable.
+        /// <summary>Removes all elements from the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Hashtable" /> is read-only. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Clear()
         {
             Debug.Assert(!_isWriterInProgress, "Race condition detected in usages of Hashtable - multiple threads appear to be writing to a Hashtable instance simultaneously!  Don't do that - use Hashtable.Synchronized.");
@@ -322,6 +375,9 @@ namespace System.Collections
         // Clone returns a virtually identical copy of this hash table.  This does
         // a shallow copy - the Objects in the table aren't cloned, only the references
         // to those Objects.
+        /// <summary>Creates a shallow copy of the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>A shallow copy of the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual Object Clone()
         {
             bucket[] lbuckets = _buckets;
@@ -345,6 +401,11 @@ namespace System.Collections
         }
 
         // Checks if this hashtable contains the given key.
+        /// <summary>Determines whether the <see cref="T:System.Collections.Hashtable" /> contains a specific key.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.Hashtable" /> contains an element with the specified key; otherwise, false.</returns>
+        /// <param name="key">The key to locate in the <see cref="T:System.Collections.Hashtable" />. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual bool Contains(Object key)
         {
             return ContainsKey(key);
@@ -353,6 +414,11 @@ namespace System.Collections
         // Checks if this hashtable contains an entry with the given key.  This is
         // an O(1) operation.
         // 
+        /// <summary>Determines whether the <see cref="T:System.Collections.Hashtable" /> contains a specific key.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.Hashtable" /> contains an element with the specified key; otherwise, false.</returns>
+        /// <param name="key">The key to locate in the <see cref="T:System.Collections.Hashtable" />. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual bool ContainsKey(Object key)
         {
             if (key == null)
@@ -393,6 +459,10 @@ namespace System.Collections
         // search and is thus be substantially slower than the ContainsKey
         // method.
         // 
+        /// <summary>Determines whether the <see cref="T:System.Collections.Hashtable" /> contains a specific value.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.Hashtable" /> contains an element with the specified <paramref name="value" />; otherwise, false.</returns>
+        /// <param name="value">The value to locate in the <see cref="T:System.Collections.Hashtable" />. The value can be null. </param>
+        /// <filterpriority>1</filterpriority>
         public virtual bool ContainsValue(Object value)
         {
             if (value == null)
@@ -455,6 +525,14 @@ namespace System.Collections
 
         // Copies the values in this hash table to an array at
         // a given index.  Note that this only copies values, and not keys.
+        /// <summary>Copies the <see cref="T:System.Collections.Hashtable" /> elements to a one-dimensional <see cref="T:System.Array" /> instance at the specified index.</summary>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the <see cref="T:System.Collections.DictionaryEntry" /> objects copied from <see cref="T:System.Collections.Hashtable" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.Hashtable" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.Hashtable" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
@@ -513,6 +591,12 @@ namespace System.Collections
         // Returns the value associated with the given key. If an entry with the
         // given key is not found, the returned value is null.
         // 
+        /// <summary>Gets or sets the value associated with the specified key.</summary>
+        /// <returns>The value associated with the specified key. If the specified key is not found, attempting to get it returns null, and attempting to set it creates a new element using the specified key.</returns>
+        /// <param name="key">The key whose value to get or set. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Hashtable" /> is read-only.-or- The property is set, <paramref name="key" /> does not exist in the collection, and the <see cref="T:System.Collections.Hashtable" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual Object this[Object key]
         {
             get
@@ -662,6 +746,9 @@ namespace System.Collections
         // in progress, the MoveNext and Current methods of the
         // enumerator will throw an exception.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.IDictionaryEnumerator" /> that iterates through the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.IDictionaryEnumerator" /> for the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IDictionaryEnumerator GetEnumerator()
         {
             return new HashtableEnumerator(this, HashtableEnumerator.DictEntry);
@@ -670,6 +757,10 @@ namespace System.Collections
         // Internal method to get the hash code for an Object.  This will call
         // GetHashCode() on each object if you haven't provided an IHashCodeProvider
         // instance.  Otherwise, it calls hcp.GetHashCode(obj).
+        /// <summary>Returns the hash code for the specified key.</summary>
+        /// <returns>The hash code for <paramref name="key" />.</returns>
+        /// <param name="key">The <see cref="T:System.Object" /> for which a hash code is to be returned. </param>
+        /// <exception cref="T:System.NullReferenceException"><paramref name="key" /> is null. </exception>
         protected virtual int GetHash(Object key)
         {
             if (_keycomparer != null)
@@ -678,17 +769,26 @@ namespace System.Collections
         }
 
         // Is this Hashtable read-only?
+        /// <summary>Gets a value indicating whether the <see cref="T:System.Collections.Hashtable" /> is read-only.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.Hashtable" /> is read-only; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsReadOnly
         {
             get { return false; }
         }
 
+        /// <summary>Gets a value indicating whether the <see cref="T:System.Collections.Hashtable" /> has a fixed size.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.Hashtable" /> has a fixed size; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsFixedSize
         {
             get { return false; }
         }
 
         // Is this Hashtable synchronized?  See SyncRoot property
+        /// <summary>Gets a value indicating whether access to the <see cref="T:System.Collections.Hashtable" /> is synchronized (thread safe).</summary>
+        /// <returns>true if access to the <see cref="T:System.Collections.Hashtable" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsSynchronized
         {
             get { return false; }
@@ -698,6 +798,11 @@ namespace System.Collections
         // instance in the constructor, this method will call comparer.Compare(item, key).
         // Otherwise, it will call item.Equals(key).
         // 
+        /// <summary>Compares a specific <see cref="T:System.Object" /> with a specific key in the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>true if <paramref name="item" /> and <paramref name="key" /> are equal; otherwise, false.</returns>
+        /// <param name="item">The <see cref="T:System.Object" /> to compare with <paramref name="key" />. </param>
+        /// <param name="key">The key in the <see cref="T:System.Collections.Hashtable" /> to compare with <paramref name="item" />. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="item" /> is null.-or- <paramref name="key" /> is null. </exception>
         protected virtual bool KeyEquals(Object item, Object key)
         {
             Debug.Assert(key != null, "key can't be null here!");
@@ -723,6 +828,9 @@ namespace System.Collections
         // to the hash table are reflected in this collection.  It is not
         // a static copy of all the keys in the hash table.
         // 
+        /// <summary>Gets an <see cref="T:System.Collections.ICollection" /> containing the keys in the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.ICollection" /> containing the keys in the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual ICollection Keys
         {
             get
@@ -742,6 +850,9 @@ namespace System.Collections
         // to the hash table are reflected in this collection.  It is not
         // a static copy of all the keys in the hash table.
         // 
+        /// <summary>Gets an <see cref="T:System.Collections.ICollection" /> containing the values in the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>An <see cref="T:System.Collections.ICollection" /> containing the values in the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual ICollection Values
         {
             get
@@ -932,6 +1043,11 @@ namespace System.Collections
         // key exists in the hashtable, it is removed. An ArgumentException is
         // thrown if the key is null.
         // 
+        /// <summary>Removes the element with the specified key from the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <param name="key">The key of the element to remove. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Hashtable" /> is read-only.-or- The <see cref="T:System.Collections.Hashtable" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Remove(Object key)
         {
             if (key == null)
@@ -977,6 +1093,9 @@ namespace System.Collections
         }
 
         // Returns the object to synchronize on for this hash table.
+        /// <summary>Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>An object that can be used to synchronize access to the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object SyncRoot
         {
             get
@@ -991,6 +1110,9 @@ namespace System.Collections
 
         // Returns the number of associations in this hashtable.
         // 
+        /// <summary>Gets the number of key/value pairs contained in the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>The number of key/value pairs contained in the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual int Count
         {
             get { return _count; }
@@ -998,6 +1120,11 @@ namespace System.Collections
 
         // Returns a thread-safe wrapper for a Hashtable.
         //
+        /// <summary>Returns a synchronized (thread-safe) wrapper for the <see cref="T:System.Collections.Hashtable" />.</summary>
+        /// <returns>A synchronized (thread-safe) wrapper for the <see cref="T:System.Collections.Hashtable" />.</returns>
+        /// <param name="table">The <see cref="T:System.Collections.Hashtable" /> to synchronize. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="table" /> is null. </exception>
+        /// <filterpriority>1</filterpriority>
         public static Hashtable Synchronized(Hashtable table)
         {
             if (table == null)

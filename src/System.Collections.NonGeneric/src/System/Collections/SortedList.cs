@@ -58,6 +58,8 @@ namespace System.Collections
     // has a constructor that allows a specific IComparer implementation to
     // be specified.
     // 
+    /// <summary>Represents a collection of key/value pairs that are sorted by the keys and are accessible by key and by index.</summary>
+    /// <filterpriority>1</filterpriority>
     [DebuggerTypeProxy(typeof(System.Collections.SortedList.SortedListDebugView))]
     [DebuggerDisplay("Count = {Count}")]
 #if FEATURE_CORECLR
@@ -82,11 +84,12 @@ namespace System.Collections
         // required. The elements of the sorted list are ordered according to the
         // IComparable interface, which must be implemented by the keys of
         // all entries added to the sorted list.
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that is empty, has the default initial capacity, and is sorted according to the <see cref="T:System.IComparable" /> interface implemented by each key added to the <see cref="T:System.Collections.SortedList" /> object.</summary>
         public SortedList()
         {
             Init();
         }
-        
+
         private void Init()
         {
             _keys = Array.Empty<Object>();
@@ -102,6 +105,10 @@ namespace System.Collections
         // IComparable interface, which must be implemented by the keys of
         // all entries added to the sorted list.
         //
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that is empty, has the specified initial capacity, and is sorted according to the <see cref="T:System.IComparable" /> interface implemented by each key added to the <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <param name="initialCapacity">The initial number of elements that the <see cref="T:System.Collections.SortedList" /> object can contain. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="initialCapacity" /> is less than zero. </exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough available memory to create a <see cref="T:System.Collections.SortedList" /> object with the specified <paramref name="initialCapacity" />.</exception>
         public SortedList(int initialCapacity)
         {
             if (initialCapacity < 0)
@@ -122,6 +129,8 @@ namespace System.Collections
         // interface, which in that case must be implemented by the keys of all
         // entries added to the sorted list.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that is empty, has the default initial capacity, and is sorted according to the specified <see cref="T:System.Collections.IComparer" /> interface.</summary>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing keys.-or- null to use the <see cref="T:System.IComparable" /> implementation of each key. </param>
         public SortedList(IComparer comparer)
             : this()
         {
@@ -137,6 +146,11 @@ namespace System.Collections
         // the IComparable interface, which in that case must be implemented
         // by the keys of all entries added to the sorted list.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that is empty, has the specified initial capacity, and is sorted according to the specified <see cref="T:System.Collections.IComparer" /> interface.</summary>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing keys.-or- null to use the <see cref="T:System.IComparable" /> implementation of each key. </param>
+        /// <param name="capacity">The initial number of elements that the <see cref="T:System.Collections.SortedList" /> object can contain. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity" /> is less than zero. </exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough available memory to create a <see cref="T:System.Collections.SortedList" /> object with the specified <paramref name="capacity" />.</exception>
         public SortedList(IComparer comparer, int capacity)
             : this(comparer)
         {
@@ -149,6 +163,10 @@ namespace System.Collections
         // keys of all entries in the the given dictionary as well as keys
         // subsequently added to the sorted list.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that contains elements copied from the specified dictionary, has the same initial capacity as the number of elements copied, and is sorted according to the <see cref="T:System.IComparable" /> interface implemented by each key.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> implementation to copy to a new <see cref="T:System.Collections.SortedList" /> object.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
+        /// <exception cref="T:System.InvalidCastException">One or more elements in <paramref name="d" /> do not implement the <see cref="T:System.IComparable" /> interface. </exception>
         public SortedList(IDictionary d)
             : this(d, null)
         {
@@ -162,6 +180,11 @@ namespace System.Collections
         // by the keys of all entries in the the given dictionary as well as keys
         // subsequently added to the sorted list.
         // 
+        /// <summary>Initializes a new instance of the <see cref="T:System.Collections.SortedList" /> class that contains elements copied from the specified dictionary, has the same initial capacity as the number of elements copied, and is sorted according to the specified <see cref="T:System.Collections.IComparer" /> interface.</summary>
+        /// <param name="d">The <see cref="T:System.Collections.IDictionary" /> implementation to copy to a new <see cref="T:System.Collections.SortedList" /> object.</param>
+        /// <param name="comparer">The <see cref="T:System.Collections.IComparer" /> implementation to use when comparing keys.-or- null to use the <see cref="T:System.IComparable" /> implementation of each key. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="d" /> is null. </exception>
+        /// <exception cref="T:System.InvalidCastException"><paramref name="comparer" /> is null, and one or more elements in <paramref name="d" /> do not implement the <see cref="T:System.IComparable" /> interface. </exception>
         public SortedList(IDictionary d, IComparer comparer)
             : this(comparer, (d != null ? d.Count : 0))
         {
@@ -184,6 +207,15 @@ namespace System.Collections
         // Adds an entry with the given key and value to this sorted list. An
         // ArgumentException is thrown if the key is already present in the sorted list.
         // 
+        /// <summary>Adds an element with the specified key and value to a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <param name="key">The key of the element to add. </param>
+        /// <param name="value">The value of the element to add. The value can be null. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentException">An element with the specified <paramref name="key" /> already exists in the <see cref="T:System.Collections.SortedList" /> object.-or- The <see cref="T:System.Collections.SortedList" /> is set to use the <see cref="T:System.IComparable" /> interface, and <paramref name="key" /> does not implement the <see cref="T:System.IComparable" /> interface. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.SortedList" /> is read-only.-or- The <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough available memory to add the element to the <see cref="T:System.Collections.SortedList" />.</exception>
+        /// <exception cref="T:System.InvalidOperationException">The comparer throws an exception. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void Add(Object key, Object value)
         {
             if (key == null) throw new ArgumentNullException(nameof(key), SR.ArgumentNull_Key);
@@ -200,6 +232,11 @@ namespace System.Collections
         // of entries the list can contain before a reallocation of the internal
         // arrays is required.
         // 
+        /// <summary>Gets or sets the capacity of a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The number of elements that the <see cref="T:System.Collections.SortedList" /> object can contain.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">The value assigned is less than the current number of elements in the <see cref="T:System.Collections.SortedList" /> object.</exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough memory available on the system.</exception>
+        /// <filterpriority>2</filterpriority>
         public virtual int Capacity
         {
             get
@@ -241,6 +278,9 @@ namespace System.Collections
 
         // Returns the number of entries in this sorted list.
         // 
+        /// <summary>Gets the number of elements contained in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The number of elements contained in the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual int Count
         {
             get
@@ -253,6 +293,9 @@ namespace System.Collections
         // method returns the same object as GetKeyList, but typed as an
         // ICollection instead of an IList.
         // 
+        /// <summary>Gets the keys in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An <see cref="T:System.Collections.ICollection" /> object containing the keys in the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual ICollection Keys
         {
             get
@@ -265,6 +308,9 @@ namespace System.Collections
         // method returns the same object as GetValueList, but typed as an
         // ICollection instead of an IList.
         // 
+        /// <summary>Gets the values in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An <see cref="T:System.Collections.ICollection" /> object containing the values in the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>1</filterpriority>
         public virtual ICollection Values
         {
             get
@@ -274,23 +320,35 @@ namespace System.Collections
         }
 
         // Is this SortedList read-only?
+        /// <summary>Gets a value indicating whether a <see cref="T:System.Collections.SortedList" /> object is read-only.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.SortedList" /> object is read-only; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsReadOnly
         {
             get { return false; }
         }
 
+        /// <summary>Gets a value indicating whether a <see cref="T:System.Collections.SortedList" /> object has a fixed size.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.SortedList" /> object has a fixed size; otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsFixedSize
         {
             get { return false; }
         }
 
         // Is this SortedList synchronized (thread-safe)?
+        /// <summary>Gets a value indicating whether access to a <see cref="T:System.Collections.SortedList" /> object is synchronized (thread safe).</summary>
+        /// <returns>true if access to the <see cref="T:System.Collections.SortedList" /> object is synchronized (thread safe); otherwise, false. The default is false.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual bool IsSynchronized
         {
             get { return false; }
         }
 
         // Synchronization root for this object.
+        /// <summary>Gets an object that can be used to synchronize access to a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An object that can be used to synchronize access to the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual Object SyncRoot
         {
             get
@@ -304,6 +362,9 @@ namespace System.Collections
         }
 
         // Removes all entries from this sorted list.
+        /// <summary>Removes all elements from a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.SortedList" /> object is read-only.-or- The <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Clear()
         {
             // clear does not change the capacity
@@ -316,6 +377,10 @@ namespace System.Collections
         // Makes a virtually identical copy of this SortedList.  This is a shallow 
         // copy.  IE, the Objects in the SortedList are not cloned - we copy the 
         // references to those objects.
+        /// <summary>Creates a shallow copy of a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>A shallow copy of the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>2</filterpriority>
+        /// <PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />      </PermissionSet>
         public virtual Object Clone()
         {
             SortedList sl = new SortedList(_size);
@@ -331,6 +396,12 @@ namespace System.Collections
 
         // Checks if this sorted list contains an entry with the given key.
         // 
+        /// <summary>Determines whether a <see cref="T:System.Collections.SortedList" /> object contains a specific key.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.SortedList" /> object contains an element with the specified <paramref name="key" />; otherwise, false.</returns>
+        /// <param name="key">The key to locate in the <see cref="T:System.Collections.SortedList" /> object. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The comparer throws an exception. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual bool Contains(Object key)
         {
             return IndexOfKey(key) >= 0;
@@ -338,6 +409,12 @@ namespace System.Collections
 
         // Checks if this sorted list contains an entry with the given key.
         // 
+        /// <summary>Determines whether a <see cref="T:System.Collections.SortedList" /> object contains a specific key.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.SortedList" /> object contains an element with the specified <paramref name="key" />; otherwise, false.</returns>
+        /// <param name="key">The key to locate in the <see cref="T:System.Collections.SortedList" /> object.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The comparer throws an exception. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual bool ContainsKey(Object key)
         {
             // Yes, this is a SPEC'ed duplicate of Contains().
@@ -350,12 +427,24 @@ namespace System.Collections
         // search and is substantially slower than the Contains
         // method.
         // 
+        /// <summary>Determines whether a <see cref="T:System.Collections.SortedList" /> object contains a specific value.</summary>
+        /// <returns>true if the <see cref="T:System.Collections.SortedList" /> object contains an element with the specified <paramref name="value" />; otherwise, false.</returns>
+        /// <param name="value">The value to locate in the <see cref="T:System.Collections.SortedList" /> object. The value can be null. </param>
+        /// <filterpriority>2</filterpriority>
         public virtual bool ContainsValue(Object value)
         {
             return IndexOfValue(value) >= 0;
         }
 
         // Copies the values in this SortedList to an array.
+        /// <summary>Copies <see cref="T:System.Collections.SortedList" /> elements to a one-dimensional <see cref="T:System.Array" /> object, starting at the specified index in the array.</summary>
+        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> object that is the destination of the <see cref="T:System.Collections.DictionaryEntry" /> objects copied from <see cref="T:System.Collections.SortedList" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
+        /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than zero. </exception>
+        /// <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.SortedList" /> object is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />. </exception>
+        /// <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.SortedList" /> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
@@ -404,6 +493,11 @@ namespace System.Collections
 
         // Returns the value of the entry at the given index.
         // 
+        /// <summary>Gets the value at the specified index of a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The value at the specified index of the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <param name="index">The zero-based index of the value to get. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is outside the range of valid indexes for the <see cref="T:System.Collections.SortedList" /> object. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual Object GetByIndex(int index)
         {
             if (index < 0 || index >= Count)
@@ -427,6 +521,9 @@ namespace System.Collections
         // the MoveNext and Remove methods
         // of the enumerator will throw an exception.
         //
+        /// <summary>Returns an <see cref="T:System.Collections.IDictionaryEnumerator" /> object that iterates through a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An <see cref="T:System.Collections.IDictionaryEnumerator" /> object for the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IDictionaryEnumerator GetEnumerator()
         {
             return new SortedListEnumerator(this, 0, _size, SortedListEnumerator.DictEntry);
@@ -434,6 +531,11 @@ namespace System.Collections
 
         // Returns the key of the entry at the given index.
         // 
+        /// <summary>Gets the key at the specified index of a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The key at the specified index of the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <param name="index">The zero-based index of the key to get. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is outside the range of valid indexes for the <see cref="T:System.Collections.SortedList" /> object.</exception>
+        /// <filterpriority>2</filterpriority>
         public virtual Object GetKey(int index)
         {
             if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException(nameof(index), SR.ArgumentOutOfRange_Index);
@@ -453,6 +555,9 @@ namespace System.Collections
         // Remove and RemoveRange methods or through an enumerator).
         // Null is an invalid key value.
         // 
+        /// <summary>Gets the keys in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An <see cref="T:System.Collections.IList" /> object containing the keys in the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IList GetKeyList()
         {
             if (_keyList == null) _keyList = new KeyList(this);
@@ -470,6 +575,9 @@ namespace System.Collections
         // elements (through the Remove, RemoveRange, Set and
         // SetRange methods or through an enumerator).
         // 
+        /// <summary>Gets the values in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>An <see cref="T:System.Collections.IList" /> object containing the values in the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IList GetValueList()
         {
             if (_valueList == null) _valueList = new ValueList(this);
@@ -479,6 +587,14 @@ namespace System.Collections
         // Returns the value associated with the given key. If an entry with the
         // given key is not found, the returned value is null.
         // 
+        /// <summary>Gets and sets the value associated with a specific key in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The value associated with the <paramref name="key" /> parameter in the <see cref="T:System.Collections.SortedList" /> object, if <paramref name="key" /> is found; otherwise, null.</returns>
+        /// <param name="key">The key associated with the value to get or set. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.SortedList" /> object is read-only.-or- The property is set, <paramref name="key" /> does not exist in the collection, and the <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <exception cref="T:System.OutOfMemoryException">There is not enough available memory to add the element to the <see cref="T:System.Collections.SortedList" />.</exception>
+        /// <exception cref="T:System.InvalidOperationException">The comparer throws an exception. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual Object this[Object key]
         {
             get
@@ -509,6 +625,12 @@ namespace System.Collections
         // the given key does not occur in this sorted list. Null is an invalid 
         // key value.
         // 
+        /// <summary>Returns the zero-based index of the specified key in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The zero-based index of the <paramref name="key" /> parameter, if <paramref name="key" /> is found in the <see cref="T:System.Collections.SortedList" /> object; otherwise, -1.</returns>
+        /// <param name="key">The key to locate in the <see cref="T:System.Collections.SortedList" /> object. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.InvalidOperationException">The comparer throws an exception. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual int IndexOfKey(Object key)
         {
             if (key == null)
@@ -524,6 +646,10 @@ namespace System.Collections
         // size of this sorted list. The elements of the list are compared to the
         // given value using the Object.Equals method.
         // 
+        /// <summary>Returns the zero-based index of the first occurrence of the specified value in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>The zero-based index of the first occurrence of the <paramref name="value" /> parameter, if <paramref name="value" /> is found in the <see cref="T:System.Collections.SortedList" /> object; otherwise, -1.</returns>
+        /// <param name="value">The value to locate in the <see cref="T:System.Collections.SortedList" /> object. The value can be null. </param>
+        /// <filterpriority>1</filterpriority>
         public virtual int IndexOfValue(Object value)
         {
             return Array.IndexOf(_values, value, 0, _size);
@@ -547,6 +673,11 @@ namespace System.Collections
         // Removes the entry at the given index. The size of the sorted list is
         // decreased by one.
         // 
+        /// <summary>Removes the element at the specified index of a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <param name="index">The zero-based index of the element to remove. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is outside the range of valid indexes for the <see cref="T:System.Collections.SortedList" /> object. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.SortedList" /> is read-only.-or- The <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void RemoveAt(int index)
         {
             if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException(nameof(index), SR.ArgumentOutOfRange_Index);
@@ -566,6 +697,11 @@ namespace System.Collections
         // key exists in the sorted list, it is removed. An ArgumentException is
         // thrown if the key is null.
         // 
+        /// <summary>Removes the element with the specified key from a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <param name="key">The key of the element to remove. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.SortedList" /> object is read-only.-or- The <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <filterpriority>1</filterpriority>
         public virtual void Remove(Object key)
         {
             int i = IndexOfKey(key);
@@ -576,6 +712,11 @@ namespace System.Collections
         // Sets the value at an index to a given value.  The previous value of
         // the given entry is overwritten.
         // 
+        /// <summary>Replaces the value at a specific index in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <param name="index">The zero-based index at which to save <paramref name="value" />. </param>
+        /// <param name="value">The <see cref="T:System.Object" /> to save into the <see cref="T:System.Collections.SortedList" /> object. The value can be null. </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is outside the range of valid indexes for the <see cref="T:System.Collections.SortedList" /> object. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void SetByIndex(int index, Object value)
         {
             if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException(nameof(index), SR.ArgumentOutOfRange_Index);
@@ -586,6 +727,12 @@ namespace System.Collections
 
         // Returns a thread-safe SortedList.
         //
+        /// <summary>Returns a synchronized (thread-safe) wrapper for a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <returns>A synchronized (thread-safe) wrapper for the <see cref="T:System.Collections.SortedList" /> object.</returns>
+        /// <param name="list">The <see cref="T:System.Collections.SortedList" /> object to synchronize. </param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="list" /> is null. </exception>
+        /// <filterpriority>1</filterpriority>
+        /// <PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />      </PermissionSet>
         public static SortedList Synchronized(SortedList list)
         {
             if (list == null)
@@ -603,6 +750,9 @@ namespace System.Collections
         // sortedList.Clear();
         // sortedList.TrimToSize();
         // 
+        /// <summary>Sets the capacity to the actual number of elements in a <see cref="T:System.Collections.SortedList" /> object.</summary>
+        /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.SortedList" /> object is read-only.-or- The <see cref="T:System.Collections.SortedList" /> has a fixed size. </exception>
+        /// <filterpriority>2</filterpriority>
         public virtual void TrimToSize()
         {
             Capacity = _size;

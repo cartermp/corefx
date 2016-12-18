@@ -15,10 +15,14 @@
 namespace System.Collections
 {
     // Useful base class for typed readonly collections where items derive from object
+    /// <summary>Provides the abstract base class for a strongly typed non-generic read-only collection.</summary>
+    /// <filterpriority>2</filterpriority>
     public abstract class ReadOnlyCollectionBase : ICollection
     {
         private ArrayList _list;
 
+        /// <summary>Gets the list of elements contained in the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance.</summary>
+        /// <returns>An <see cref="T:System.Collections.ArrayList" /> representing the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance itself.</returns>
         protected ArrayList InnerList
         {
             get
@@ -29,6 +33,9 @@ namespace System.Collections
             }
         }
 
+        /// <summary>Gets the number of elements contained in the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance.</summary>
+        /// <returns>The number of elements contained in the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance.Retrieving the value of this property is an O(1) operation.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual int Count
         {
             get { return InnerList.Count; }
@@ -49,6 +56,9 @@ namespace System.Collections
             InnerList.CopyTo(array, index);
         }
 
+        /// <summary>Returns an enumerator that iterates through the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance.</summary>
+        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> for the <see cref="T:System.Collections.ReadOnlyCollectionBase" /> instance.</returns>
+        /// <filterpriority>2</filterpriority>
         public virtual IEnumerator GetEnumerator()
         {
             return InnerList.GetEnumerator();
