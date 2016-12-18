@@ -4,6 +4,7 @@
 
 namespace System.Linq.Expressions
 {
+    /// <summary>Provides an internal interface for accessing the arguments of DynamicExpression tree nodes as well as CallSite and Rewriting functionality.  You should not use this API.  It is only public due to DLL refactoring and exists only for internal performance optimizations.</summary>
     public interface IDynamicExpression : IArgumentProvider
     {
         /// <summary>

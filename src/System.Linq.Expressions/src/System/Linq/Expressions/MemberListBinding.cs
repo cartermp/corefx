@@ -51,6 +51,7 @@ namespace System.Linq.Expressions
     }
 
 
+    /// <summary>Provides the base class from which the classes that represent expression tree nodes are derived. It also contains static (Shared in Visual Basic) factory methods to create the various node types. This is an abstract class.</summary>
     public partial class Expression
     {
         ///<summary>Creates a <see cref="T:System.Linq.Expressions.MemberListBinding" /> where the member is a field or property.</summary>

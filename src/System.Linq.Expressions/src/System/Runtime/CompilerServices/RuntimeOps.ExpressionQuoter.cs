@@ -12,6 +12,7 @@ using System.Reflection;
 
 namespace System.Runtime.CompilerServices
 {
+    /// <summary>Contains helper methods called from dynamically generated methods.</summary>
     public partial class RuntimeOps
     {
         /// <summary>

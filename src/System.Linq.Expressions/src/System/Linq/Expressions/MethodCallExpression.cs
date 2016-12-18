@@ -693,6 +693,7 @@ namespace System.Linq.Expressions
 
     #endregion
 
+    /// <summary>Provides the base class from which the classes that represent expression tree nodes are derived. It also contains static (Shared in Visual Basic) factory methods to create the various node types. This is an abstract class.</summary>
     public partial class Expression
     {
         #region Call
